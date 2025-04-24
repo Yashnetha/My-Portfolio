@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management System</title>
+</head>
+<body>
+  <h1>Add a New Book</h1>
+  <form id="addBookForm">
+    <input type="text" id="title" placeholder="Book Title" required>
+    <input type="text" id="author" placeholder="Author" required>
+    <input type="text" id="genre" placeholder="Genre" required>
+    <button type="submit">Add Book</button>
+  </form>
+
+  <script>
+    document.getElementById('addBookForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const bookData = {
+        Title: document.getElementById('title').value,
+        Author: document.getElementById('author').value,
+        Genre: document.getElementById('genre').value,
+      };
+
+      fetch('http://localhost:3000/add_book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookData),
+      })
+      .then(response => response.json())
+      .then(data => alert(data.message))
+      .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>
